@@ -1,2 +1,1 @@
-###hongeunlee
-
+## marketing analytic with R   
