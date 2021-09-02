@@ -16,10 +16,33 @@ data$days_since = as.numeric(difftime(time1 =  "2016-01-01",
 ```
 head(data)
 ```
+```
+## customer_id purchase_amount data_of_purchase year_of_purchase days_since
+## 1         760              25       2009-11-06             2009  2247.2083
+## 2         860              50       2012-09-28             2012  1190.2083
+## 3        1200             100       2005-10-25             2005  3720.2083
+## 4        1420              50       2009-07-09             2009  2367.2083
+## 5        1940              70       2013-01-25             2013  1071.2083
+## 6        1960              40       2013-10-29             2013   794.2083
+```
+```
 summary(data)
-
-#compute key marketing indicatier using SQL language
+```
+```
+ customer_id     purchase_amount   data_of_purchase     year_of_purchase   days_since      
+ Min.   :    10   Min.   :   5.00   Min.   :2005-01-02   Min.   :2005     Min.   :   1.208  
+ 1st Qu.: 57720   1st Qu.:  25.00   1st Qu.:2009-01-17   1st Qu.:2009     1st Qu.: 733.208  
+ Median :102440   Median :  30.00   Median :2011-11-23   Median :2011     Median :1500.208  
+ Mean   :108935   Mean   :  62.34   Mean   :2011-07-14   Mean   :2011     Mean   :1632.148  
+ 3rd Qu.:160525   3rd Qu.:  60.00   3rd Qu.:2013-12-29   3rd Qu.:2013     3rd Qu.:2540.208  
+ Max.   :264200   Max.   :4500.00   Max.   :2015-12-31   Max.   :2015     Max.   :4016.208 
+```
+****
+### Compute key marketing indicatier using SQL language
+```
 library(sqldf)
+```
+```
 customers_2015 = sqldf("SELECT customer_id,
                        MIN(days_since) AS 'recency',
                       MAX(days_since) AS 'first_purchase',
@@ -27,9 +50,43 @@ customers_2015 = sqldf("SELECT customer_id,
                        AVG(purchase_amount) AS 'amount'
                        FROM data 
                        GROUP BY 1")
+```
+```
 head(customers_2015)
+```
+```
+ customer_id   recency first_purchase frequency    amount       
+1          10 3829.2083       3829.208         1  30.00000        
+2          80  343.2083       3751.208         7  71.42857 
+3          90  758.2083       3783.208        10 115.80000        
+4         120 1401.2083       1401.208         1  20.00000    
+5         130 2970.2083       3710.208         2  50.00000         
+6         160 2963.2083       3577.208         2  30.00000         
+```
+
+```
 summary(customers_2015)
+```
+```
+  customer_id        recency         first_purchase       frequency          amount                        
+ Min.   :    10   Min.   :   1.208   Min.   :   1.208   Min.   : 1.000   Min.   :   5.00    
+ 1st Qu.: 81990   1st Qu.: 244.208   1st Qu.: 988.208   1st Qu.: 1.000   1st Qu.:  21.67    
+ Median :136430   Median :1070.208   Median :2087.208   Median : 2.000   Median :  30.00  
+ Mean   :137574   Mean   :1253.246   Mean   :1984.218   Mean   : 2.782   Mean   :  57.79  
+ 3rd Qu.:195100   3rd Qu.:2130.208   3rd Qu.:2992.208   3rd Qu.: 3.000   3rd Qu.:  50.00   
+ Max.   :264200   Max.   :4014.208   Max.   :4016.208   Max.   :45.000   Max.   :4500.00  
+                                                                                          
+ ```
+ #### The higer Recency = less frequently purchase, Smaller recency = recent the last purchase
+
+```
 hist(customers_2015$recency)
+````
+```
+![image](https://user-images.githubusercontent.com/77463110/131763588-02582baf-b537-454b-a41a-9c5c8e85a29d.png)
+
+
+```
 hist(customers_2015$frequency)
 hist(customers_2015$amount)
 hist(customers_2015$amount, breaks = 100)
