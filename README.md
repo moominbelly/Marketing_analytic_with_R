@@ -51,6 +51,7 @@ customers_2015 = sqldf("SELECT customer_id,
                        FROM data 
                        GROUP BY 1")
 ```
+### Explore customers data in 2015
 ```
 head(customers_2015)
 ```
@@ -77,21 +78,28 @@ summary(customers_2015)
  Max.   :264200   Max.   :4014.208   Max.   :4016.208   Max.   :45.000   Max.   :4500.00  
                                                                                           
  ```
- #### The higer Recency = less frequently purchase, Smaller recency = recent the last purchase
-
+ #### **The higer Recency = less frequently purchase, Smaller recency = recent the last purchase
+****
+#### Histogram Recency, Frequency, Amount
 ```
 hist(customers_2015$recency)
 ````
 ```
-![image](https://user-images.githubusercontent.com/77463110/131763588-02582baf-b537-454b-a41a-9c5c8e85a29d.png)
-
+graph
 
 ```
+```
 hist(customers_2015$frequency)
+```
+```
 hist(customers_2015$amount)
+```
+```
 hist(customers_2015$amount, breaks = 100)
+```
+****
 
-#how to create managerial segmentation ----
+#### how to create managerial segmentation ----
 #simple 2- segment solution based on recency alone 
 customers_2015$segment =ifelse(test = customers_2015$recency >365*3, yes = 'inactive', no = 'NA')
 View(customers_2015)
