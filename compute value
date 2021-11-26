@@ -1,6 +1,7 @@
-# computing recency, frequnecy, monetary value ---- 
+### computing recency, frequnecy, monetary value ---- 
 ```
 data <- read.delim('purchase.txt', header= FALSE, sep = '\t', dec = '.')
+```
 ```
 colnames(data) <- c('customer_id', 'purchase_amount', 'data_of_purchase')
 data$data_of_purchase = as.Date(data$data_of_purchase, "%Y-%m-%d")
@@ -8,6 +9,7 @@ data$year_of_purchase = as.numeric(format(data$data_of_purchase, "%Y"))
 data$days_since = as.numeric(difftime(time1 =  "2016-01-01",
                                       time2 = data$data_of_purchase,
                                       units = "days"))
+ ```
 head(data)
 summary(data)
 
